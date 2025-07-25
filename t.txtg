@@ -1,0 +1,21 @@
+trekperks/
+├── manage.py
+├── trekperks/              ← main project folder (settings.py, urls.py ইত্যাদি)
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py (বা asgi.py)
+├── loyalty/                ← loyalty অ্যাপ
+│   ├── __init__.py
+│   ├── models.py
+│   ├── views.py
+│   ├── serializers.py
+│   ├── urls.py
+│   └── permissions.py
+└── users/                  ← user অ্যাপ (custom user model বা auth-related)
+    ├── __init__.py
+    ├── models.py
+    ├── views.py (যদি থাকে)
+    ├── serializers.py (যদি থাকে)
+    ├── urls.py (যদি থাকে)
+    
