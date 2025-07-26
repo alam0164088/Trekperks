@@ -1,16 +1,23 @@
+# users/serializers.py
+from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import CustomUser
+from rest_framework.validators import UniqueValidator
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)  # Password লুকানো থাকবে
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'phone_number', 'password']
+        model = User
+        fields = ['id', 'username', 'email', 'password']
 
     def create(self, validated_data):
-        password = validated_data.pop('password')
-        user = CustomUser(**validated_data)
-        user.set_password(password)  # Password হ্যাশ করে সেভ করবে
-        user.save()
+        user = User.objects.create_user(
+            username = validated_data['username'],
+            email = validated_data['email'],
+            password = validated_data['password']
+        )
         return user
